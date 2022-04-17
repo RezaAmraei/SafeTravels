@@ -1,5 +1,7 @@
 package com.codingdojo.safetravels.controllers;
 
+
+
 import java.util.List;
 
 import javax.validation.Valid;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -34,6 +37,24 @@ public class ExpenseContoller{
 			return "index.jsp";
 		} else {
 			expenseService.createExpense(expense);
+			return "redirect:/";
+		}
+	}
+	@RequestMapping("/edit/{id}")
+	public String edit(@ModelAttribute("editExpense")Expense expense, Model model, @PathVariable("id") Long id) {
+		Expense currExpense = expenseService.findExpense(id);
+
+		model.addAttribute("currExpense", currExpense);
+		return "edit.jsp";
+	}
+	@PostMapping("/editting/{id}")
+	public String editting(@Valid @ModelAttribute("editExpense") Expense expense, BindingResult result,@PathVariable("id")Long id) {
+
+		if(result.hasErrors()) {
+			return "edit.jsp";
+		} else {
+			
+			expenseService.updateExpense(id, expense.getExpenseName(), expense.getVendor(), expense.getAmount(), expense.getDescription());
 			return "redirect:/";
 		}
 	}

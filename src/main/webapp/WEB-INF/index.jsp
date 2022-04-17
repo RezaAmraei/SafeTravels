@@ -16,12 +16,15 @@
 		<th>Expense</th>
 		<th>Vendor</th>
 		<th>Amount</th>
+		<th>Actions</th>
 	</tr>
 	<c:forEach var="oneExpense" items="${allExpenses}">
 	<tr>
 		<td><c:out value="${oneExpense.expenseName}"/></td>
 		<td><c:out value="${oneExpense.vendor}"/></td>
 		<td><c:out value="${oneExpense.amount}"/></td>
+		<td><a href="/edit/${oneExpense.id}">Edit</a></td>
+		
 	</tr>	
 	</c:forEach>	
 	
