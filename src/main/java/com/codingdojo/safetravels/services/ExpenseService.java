@@ -27,6 +27,7 @@ public Expense createExpense(Expense expense) {
 	return expenseRepository.save(expense);
 }
 
+//ask if update was written correctly 
 public Expense updateExpense(Long id, String expenseName, String vendor, double amount, String description) {
 //public Expense updateExpense(Expense expense) {
 	Expense currExpense = expenseRepository.findById(id).get();
@@ -47,6 +48,10 @@ public Expense findExpense(Long id) {
         return optionalExpense.get();
     } else {
         return null;
-    }
-}
+    	}
+	}
+public void deleteExpense(Long id) {
+	expenseRepository.deleteById(id);
+	}
+	
 }

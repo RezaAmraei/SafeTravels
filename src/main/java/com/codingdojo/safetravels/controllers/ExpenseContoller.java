@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import com.codingdojo.safetravels.services.ExpenseService;
 
 @Controller
 public class ExpenseContoller{
+	//ask about autowired
 	@Autowired 
 	ExpenseService expenseService;
 	
@@ -47,6 +49,7 @@ public class ExpenseContoller{
 		model.addAttribute("currExpense", currExpense);
 		return "edit.jsp";
 	}
+	//ask about @modelattribute
 	@PostMapping("/editting/{id}")
 	public String editting(@Valid @ModelAttribute("editExpense") Expense expense, BindingResult result,@PathVariable("id")Long id) {
 
@@ -57,5 +60,17 @@ public class ExpenseContoller{
 			expenseService.updateExpense(id, expense.getExpenseName(), expense.getVendor(), expense.getAmount(), expense.getDescription());
 			return "redirect:/";
 		}
+	}
+	//ask why deletemapping doesnt work
+	@RequestMapping("/delete/{id}")
+	public String delete(@PathVariable("id") Long id) {
+		expenseService.deleteExpense(id);
+		return "redirect:/";
+	}
+	@RequestMapping("/expense/details/{id}")
+	public String expenseDetails(@ModelAttribute("addExpense")Expense expense, Model model, @PathVariable("id")Long id) {
+		Expense currExpense = expenseService.findExpense(id);
+		model.addAttribute("expense", currExpense);
+		return "deatils.jsp";
 	}
 }

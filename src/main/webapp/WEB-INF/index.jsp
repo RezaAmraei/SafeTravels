@@ -20,17 +20,23 @@
 	</tr>
 	<c:forEach var="oneExpense" items="${allExpenses}">
 	<tr>
-		<td><c:out value="${oneExpense.expenseName}"/></td>
+		<td><a href="/expense/details/${oneExpense.id}"><c:out value="${oneExpense.expenseName}"/></a></td>
 		<td><c:out value="${oneExpense.vendor}"/></td>
 		<td><c:out value="${oneExpense.amount}"/></td>
 		<td><a href="/edit/${oneExpense.id}">Edit</a></td>
+		<form action="/delete/${oneExpense.id}">
+		<!-- Ask what this does -->
+		<!-- <input type="hidden" name="_method" value="delete" /> -->
+		
+		<td><input type="submit" value="Delete" /></td>
+		</form>
 		
 	</tr>	
 	</c:forEach>	
 	
 </table>
 <h1>Add an Expense:</h1>
-
+<!-- Whats the difference between form and form:form -->
 <form:form action="/add/expense" method="post" modelAttribute="addExpense" >
 
 <p>
